@@ -396,17 +396,52 @@ Ako simboličko izvršavanje pokaže da neka putanja zadovoljava uslove ispravno
 
 \textit{Proveravanje ograničenih modela} (eng.~bounded model checking)  je formalna tehnika verifikacije koja se mahom koristi u industriji poluprovodnika. Proveravanje ograničenih modela vrši brzu pretragu prostora stanja i za određene probleme daje znatno poboljšanje performansi izračunavanja u odnosu na metod proveravanja modela. Uspeh tehnike zasnovan je na velikim mogućnostima iskaznih SAT rešavača (eng.~propositional SAT solvers). Ovaj metod se zasniva na ograničavanju dužine putanje stanja koja se proverava. Ako se za zadatu vrednost dužine ne pronađe greška moguće je povećati vrednost tako da se provera nastavlja dok se ne pronađe greška, model ne postane prevelik za analizu ili vrednost dužine ne dostigne gornju granicu dužine mogućih putanja čime je model verifikovan  \cite{mvj, AutoTechnFormSofVer, BMCUSS}.
 
+\section{Neki verifikacijski alat}
+% DODATI TEKST
 
 
-%verifikacija koja nije potpuno automatizovana (valjda su to formalni sistemi)
+%----------------------------
 
-%potpuno automatizovana verifikacija
-	%simbolicko izvrsavanje
-	%apstraktna interpretacija
-	%proveravanje modela i proveravanje ogranicenih modela
+\chapter{Implementacija}
+% DODATI UVODNI TEKST
+
+\section{Korišćeni podaci}
+%CM1, MW1, KC3, KC4, PC1, PC2, PC3, PC4, MC2 
 
 
+%JM1
 
+\subsection{Format arff}
+% Data Mining Practical Machine Learning Tools and Techniques
+ARFF (eng.~ attribute-relation file format) predstavlja način reprezentacije skupova podataka koji se sastoje od nezavisnih,  neuređenih instanci i koji ne uključuju međusobne relacije među instancama.  Izgled arff fajla prikazan je na slici \ref{fig:arff}. Linije koje počinju znakom \% predstavljaju komentare. Nakon komentara nalaze se naziv relacije i blok koji definiše atribute. Postoje četiri tipa atributa: imenski, brojčani, stringovi i datumi. Pri definiciji imenskih atributa potrebno je osim naziva atributa navesti i skup vrednosti, u vitičastim zagradama, koje atribut uzima. Brojčani atributi moraju da sadrže ključnu reč \textit{numeric}, stringovi \textit{string}, a datumi \textit{date}. Tip datum je zapravo poseban slučaj tipa string koji poštuje datum-vreme format: yyyy-MM-dd-THH:mm:ss (četiri cifre za godinu, po dve za mesec i dan nakon čega sledi ,,T'' i po dve cifre za sate, minute i sekunde). Odlika arff formata je da se klasni atribut eksplicitno ne navodi već je on jedan od navedenih atributa. Posledica ove odlike je da se isti fajl može koristiti da bi se odredilo koliko dobro se predviđa svaki atribut na osnovu ostalih, za pronalaženje pravila pridruživanja (eng.~association rules) ili za klasterovanje. Nakon bloka kojim se definišu atributi slede linije sa podacima, kojima prethodi @data linija. Svaka instanca se navodi u posebnoj liniji, vrednosti atributa su razdvojene zarezima, a nedostajuće vrednosti označene znakom ,,?'' \cite{weka}. 
+
+\begin{figure}[!ht]
+  \centering
+  \includegraphics[width=0.60\textwidth]{arff.png}
+  \caption{Primer arff fajla}
+  \label{fig:arff}
+\end{figure}
+
+
+\section{Izbor atributa}
+
+\section{Nalaženje najboljeg algoritma predikcije}
+%4.3.1) transformacije nad podacima (uklanjanje podataka sa nedostajucim vrednostima, standardizacija, ...)
+%		4.3.2) primena modela na podatke
+%		4.3.3) ocena modela klasifikacije (tacnost, matrica konfuzije, preciznost, odziv, ... - generalno ono sto bude potrebno)
+%		4.3.4) oversampling
+%		4.3.5) ...
+
+\section{Program koji iz C koda dobija atribute}
+
+
+%---------------------
+
+\chapter{Eksperimentalni rezultati}
+
+\section{Pokretanje verifikacijskih alata i merenje performansi}
+
+\section{Primena izabranog modela na nove podatke}
 
 %--------------------------
 %\chapter{Primeri korišćenja klasičnih \LaTeX{} elemenata}
