@@ -1,21 +1,14 @@
-const char foo(void)
-{
-    const char c = 't';
-    return c;
+union Data {
+   int i;
+   float f;
+   char str[20];
+};
+
+int main( ) {
+
+   union Data data;
+
+   printf( "Memory size occupied by data : %d\n", sizeof(data));
+
+   return 0;
 }
-
-int maxout_in(int paste, char** matrix)
-{
-    char o = foo();
-    return (int) matrix[1][2] * 5 - paste;
-}
-
-int main()
-{
-    auto char* multi = "a multi";
-    int b;
-    b=10;
-
-    return 0;
-}
-
