@@ -1,6 +1,18 @@
 /*
 ** C implementation of a hash table ADT
 */
+
+
+/*
+sadjhsa
+hjsda
+jsdjsd
+2e
+3rr
+****
+**sdads
+sddssd
+*/
 typedef enum tagReturnCode {SUCCESS, FAIL} ReturnCode;
 
 
