@@ -415,14 +415,67 @@ Ako simboličko izvršavanje pokaže da neka putanja zadovoljava uslove ispravno
 % DODATI UVODNI TEKST
 
 \section{Korišćeni podaci}
-%CM1, MW1, KC3, KC4, PC1, PC2, PC3, PC4, MC2 
 
+% DODATI TEKST
 
 %JM1
 
+% prilikom navodjenja atributa napisati da su uklonjeni odredjeni atributi jer nije pronadjeno sta su i jer pri izboru atributa nisu u top 10 najbitnijih
+
+Kao skup podataka za obučavanje modela klasifikacije korišćen je jm1.arff korpus podataka koji se nalazi na PROMISE repozitorijumu. PROMISE repozitorijum (eng.~PROMISE Software Engineering Repository) sadrži kolekciju javno dostupnih skupova podataka i alata koji treba da olakšaju istraživačima konstrukciju prediktivnih modela \cite{promise}. 
+
+JM1 datoteka sadrži informacije o C programima, njihovim karakteristikama i o tome da li sadrže grešku ili ne. Sastoji se od 10878 objekata, od kojih svaki ima 22 atributa\footnote{Za potrebe ovog rada korišćeno je 18 atributa.  Izostavljeni su atributi cyclomatic complexity, design complexity, essential complexity i branch count. Ovi atributi su izostavljeni jer za njih nije pronađen jedinstven opis, a izborom atributa je utvrđeno da ne spadaju u 10 najbitnijih atributa pa bi pokušaj njihovog izračunavanja odneo previše vremena ili bio nemoguć a dobit bi bila sitna. Atributi su izostavljani tek nakon što je utvrđeno da njihovo izostavljanje neće značajno uticati na kvalitet modela klasifikacije - model dobijen bez ovih atributa ima preciznost svega 0,02 manju od modela koji koristi sve atribute. Zbog toga je procenjeno da je bolje poboljšavati model na druge načine. }. Dvadeset jedan atribut se odnosi na razne karakteristike koda, a dvadeset drugi je atribut klase ( da li program ima ili nema grešku). 
+
+
+LOC\_BLANK numeric 
+
+BRANCH\_COUNT numeric
+
+LOC\_CODE\_AND\_COMMENT numeric
+
+LOC\_COMMENTS numeric
+
+CYCLOMATIC\_COMPLEXITY numeric
+
+DESIGN\_COMPLEXITY numeric
+
+ESSENTIAL\_COMPLEXITY numeric
+
+LOC\_EXECUTABLE numeric
+
+HALSTEAD\_CONTENT numeric
+
+HALSTEAD\_DIFFICULTY numeric
+
+HALSTEAD\_EFFORT numeric
+
+HALSTEAD\_ERROR\_EST numeric
+
+HALSTEAD\_LENGTH numeric
+
+HALSTEAD\_LEVEL numeric
+
+HALSTEAD\_PROG\_TIME numeric
+
+HALSTEAD\_VOLUME numeric
+
+NUM\_OPERANDS numeric
+
+NUM\_OPERATORS numeric
+
+NUM\_UNIQUE\_OPERANDS numeric
+
+NUM\_UNIQUE\_OPERATORS numeric
+
+LOC\_TOTAL numeric
+
+Defective {Y,N}
+
+
+
 \subsection{Format arff}
 % Data Mining Practical Machine Learning Tools and Techniques
-ARFF (eng.~ attribute-relation file format) predstavlja način reprezentacije skupova podataka koji se sastoje od nezavisnih,  neuređenih instanci i koji ne uključuju međusobne relacije među instancama.  Izgled arff fajla prikazan je na slici \ref{fig:arff}. Linije koje počinju znakom \% predstavljaju komentare. Nakon komentara nalaze se naziv relacije i blok koji definiše atribute. Postoje četiri tipa atributa: imenski, brojčani, stringovi i datumi. Pri definiciji imenskih atributa potrebno je osim naziva atributa navesti i skup vrednosti, u vitičastim zagradama, koje atribut uzima. Brojčani atributi moraju da sadrže ključnu reč \textit{numeric}, stringovi \textit{string}, a datumi \textit{date}. Tip datum je zapravo poseban slučaj tipa string koji poštuje datum-vreme format: yyyy-MM-dd-THH:mm:ss (četiri cifre za godinu, po dve za mesec i dan nakon čega sledi ,,T'' i po dve cifre za sate, minute i sekunde). Odlika arff formata je da se klasni atribut eksplicitno ne navodi već je on jedan od navedenih atributa. Posledica ove odlike je da se isti fajl može koristiti da bi se odredilo koliko dobro se predviđa svaki atribut na osnovu ostalih, za pronalaženje pravila pridruživanja (eng.~association rules) ili za klasterovanje. Nakon bloka kojim se definišu atributi slede linije sa podacima, kojima prethodi @data linija. Svaka instanca se navodi u posebnoj liniji, vrednosti atributa su razdvojene zarezima, a nedostajuće vrednosti označene znakom ,,?'' \cite{weka}. 
+ARFF (eng.~ attribute-relation file format) predstavlja način reprezentacije skupova podataka koji se sastoje od nezavisnih, neuređenih instanci i koji ne uključuju međusobne relacije među instancama. Izgled arff fajla prikazan je na slici \ref{fig:arff}. Linije koje počinju znakom ,,\%'' predstavljaju komentare. Nakon komentara nalaze se naziv relacije i blok koji definiše atribute. Postoje četiri tipa atributa: imenski, brojčani, stringovi i datumi. Pri definiciji imenskih atributa potrebno je osim naziva atributa navesti i skup vrednosti, u vitičastim zagradama, koje atribut uzima. Brojčani atributi moraju da sadrže ključnu reč \textit{numeric}, stringovi \textit{string}, a datumi \textit{date}. Tip datum je zapravo poseban slučaj tipa string koji poštuje datum-vreme format: yyyy-MM-dd-THH:mm:ss (četiri cifre za godinu, po dve za mesec i dan nakon čega sledi ,,T'' i po dve cifre za sate, minute i sekunde). Odlika arff formata je da se klasni atribut eksplicitno ne navodi već je on jedan od navedenih atributa. Posledica ove odlike je da se isti fajl može koristiti da bi se odredilo koliko dobro se predviđa svaki atribut na osnovu ostalih, za pronalaženje pravila pridruživanja (eng.~association rules) ili za klasterovanje. Nakon bloka kojim se definišu atributi slede linije sa podacima, kojima prethodi @data linija. Svaka instanca se navodi u posebnoj liniji, vrednosti atributa su razdvojene zarezima, a nedostajuće vrednosti označene znakom ,,?'' \cite{weka}. 
 
 \begin{figure}[!ht]
   \centering
@@ -432,25 +485,47 @@ ARFF (eng.~ attribute-relation file format) predstavlja način reprezentacije sk
 \end{figure}
 
 
-\section{Izbor atributa}
 
 \section{Nalaženje najboljeg algoritma predikcije}
-%4.3.1) transformacije nad podacima (uklanjanje podataka sa nedostajucim vrednostima, standardizacija, ...)
-%		4.3.2) primena modela na podatke
-%		4.3.3) ocena modela klasifikacije (tacnost, matrica konfuzije, preciznost, odziv, ... - generalno ono sto bude potrebno)
-%		4.3.4) oversampling
-%		4.3.5) ...
+
+izbor izmedju 3 algoritma da se vidi koji je najbolji. svaki se tretira na isti nacin. u daljem tekstu su opisanje transformacije nad podacima i sta je sve radjeno da bi se dobili rezultati. 
+
+%\subsection{Transformacije nad podacima} 
+
+\subsection{Uklanjanje podataka sa nedostajucim vrednostima}
+
+%			 
+\subsection{Standardizacija}
+%			 ...
+
+\subsection{Primena modela klasifikacije na podatke}
+
+
+\subsection{Ocena modela klasifikacije}
+Ovde se radi o 3 modela pa treba porediti rezultate
+
+(tacnost, matrica konfuzije, preciznost, odziv, ... - generalno ono sto bude potrebno)
+
+\subsection{Oversampling} 
+	- uoceno je da je potreban
+
+\subsection{Izbor atributa}
+
+\subsection{Zakljucak o najboljem algoritmu}
+Na osnovu prethodnih rezultata, najbolji model klasifikacije zasniva se na algoritmu slucajne sume ...
+
 
 \section{Program koji iz C koda dobija atribute}
 
+\subsection{Biblioteka pycparser}
 
 %---------------------
 
-\chapter{Eksperimentalni rezultati}
+% \chapter{Eksperimentalni rezultati}
 
-\section{Pokretanje verifikacijskih alata i merenje performansi}
+% \section{Pokretanje verifikacijskih alata i merenje performansi}
 
-\section{Primena izabranog modela na nove podatke}
+% \section{Primena izabranog modela na nove podatke}
 
 %--------------------------
 %\chapter{Primeri korišćenja klasičnih \LaTeX{} elemenata}
@@ -578,4 +653,6 @@ ARFF (eng.~ attribute-relation file format) predstavlja način reprezentacije sk
 % ------------------------------------------------------------------------------
 
 
+\bibliography{rad.bib}{}
+\bibliographystyle{plain}
 \end{document}
